@@ -4,7 +4,7 @@ class Player
 
   def get_input
     input = $stdin.getch
-    # check if valid
+    p input
   end
 
 

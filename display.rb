@@ -1,6 +1,7 @@
 require 'colorize'
 require 'io/console'
 require_relative 'debugger'
+require 'byebug'
 
 # FEATURE TO ADD: FlIP BOARD BASED ON PLAYER
 
@@ -9,9 +10,13 @@ class Display
     'w' => [-1,  0],
     'a' => [0, -1],
     's' => [1, 0],
-    'd' => [0,  1],
-    '\r' => [0, 0],
-    'q' => :abort  # temporary
+    'd' => [0,  1]
+      # temporary
+  }
+
+  COMMANDS = {
+    "\r" => :select,
+    'q' => :quit
   }
 
   attr_reader :board
@@ -49,13 +54,26 @@ class Display
 
 
   def move_cursor(input)
-    abort if input == 'q' # remove
-    unless DIRECTION.keys.include?(input)
+    #debugger
+    if COMMANDS.keys.include?(input)
+      execute_command(COMMANDS[input])
+    elsif DIRECTION.keys.include?(input)
+      move = DIRECTION[input]
+      temp_pos = @cursor_pos.map.with_index { |el, i| el + move[i] }
+      @cursor_pos = temp_pos if board.on_board?(temp_pos)
+    elsesa
       raise
     end
-    move = DIRECTION[input]
-    temp_pos = @cursor_pos.map.with_index { |el, i| el + move[i] }
-    @cursor_pos = temp_pos if board.on_board?(temp_pos)
+
+  end
+
+  def execute_command(input)
+    puts 'GOT TO EXECUTE COMMAND'
+    if input == :quit
+      abort
+    else
+
+    end
   end
 
 end

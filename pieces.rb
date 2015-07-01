@@ -122,6 +122,7 @@ class Knight < Piece
   end
 end
 
+### ADD TWO SPACE MOVEMENT ON FIRST MOVE
 class Pawn < Piece
 
   def initialize(board, color, pos)

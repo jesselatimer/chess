@@ -48,8 +48,11 @@ class Game
         sleep(1)
         next
       end
+      
     end
   end
+
+
 
 end
 
