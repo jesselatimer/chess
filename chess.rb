@@ -46,7 +46,6 @@ class Game
       raise "Yo it should be one or the other."
     end
   end
-
 end
 
 Game.new
