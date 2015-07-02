@@ -1,8 +1,6 @@
-require 'byebug'
-
 module Steppable
   def  find_moves
-    @valid_moves = []
+    @temporary_moves = []
     self.class::MOVE_DIFFS.each do |target_diff|
 
       target_pos = current_position.map.with_index do |coord, idx|
@@ -10,7 +8,7 @@ module Steppable
       end
 
       if board.on_board?(target_pos) && not_friendly?(target_pos)
-        @valid_moves << target_pos
+        @temporary_moves << target_pos.dup
       end
     end
   end
@@ -20,7 +18,7 @@ end
 module DiagonalMoveable
   def find_diag_moves
 
-    @valid_moves = []
+    @temporary_moves = []
     target_pos = current_position
 
     [1, -1].each do |iterator1|
@@ -32,7 +30,7 @@ module DiagonalMoveable
 
         while board.on_board?(target_pos)
           break if friendly?(target_pos)
-          @valid_moves << target_pos.dup
+          @temporary_moves << target_pos.dup
           break if enemy?(target_pos)
           target_pos[0] += iterator2
           target_pos[1] += iterator1
@@ -41,14 +39,14 @@ module DiagonalMoveable
       end
     end
 
-    @valid_moves.dup
+    @temporary_moves.dup
   end
 end
 
 module CardinalMoveable
   def find_card_moves
 
-    @valid_moves = []
+    @temporary_moves = []
     target_pos = current_position
 
     [0, 1].each do |dimension|
@@ -59,7 +57,7 @@ module CardinalMoveable
 
         while board.on_board?(target_pos)
           break if friendly?(target_pos)
-          @valid_moves << target_pos.dup
+          @temporary_moves << target_pos.dup
           break if enemy?(target_pos)
           target_pos[dimension] += iterator
         end
@@ -67,6 +65,6 @@ module CardinalMoveable
       end
     end
 
-    @valid_moves.dup
+    @temporary_moves.dup
   end
 end

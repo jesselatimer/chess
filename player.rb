@@ -1,10 +1,13 @@
 class Player
 
-  # Temporarily send input directl to display.
+  attr_reader :color
+
+  def initialize(color)
+    @color = color
+  end
 
   def get_input
     input = $stdin.getch
-    p input
   end
 
 
