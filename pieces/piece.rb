@@ -5,7 +5,7 @@ class Piece
 
   def initialize(board, color, pos)
     @board = board
-    @color = color #:black or :white
+    @color = color # :b or :w
     @current_position = pos
     @valid_moves = []
     @temporary_moves = []

@@ -21,9 +21,12 @@ class Board
   def on_board?(coord)
     coord.all?{|coord| coord.between?(0,7)}
   end
-  
+
   def in_check?(color)
-    king = grid.flatten.select{|space| space.is_a?(King) && space.color == color}.first
+    kings = grid.flatten.select do |space|
+      space.is_a?(King) && space.color == color
+    end
+    king = kings.first
     enemy_color = (color == :w ? :b : :w)
     enemy_pieces = grid.flatten.select{|space| space.color == enemy_color}
     enemy_pieces.each do |enemy_piece|
@@ -89,5 +92,4 @@ class Board
     grid.flatten.each {|space| space.find_moves}
     grid.flatten.each {|space| space.prune_invalid_moves}
   end
-
 end

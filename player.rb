@@ -9,6 +9,4 @@ class Player
   def get_input
     input = $stdin.getch
   end
-
-
 end

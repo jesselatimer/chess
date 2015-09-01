@@ -1,4 +1,3 @@
-### ADD TWO SPACE MOVEMENT ON FIRST MOVE
 class Pawn < Piece
   attr_accessor :move_diffs, :moved
   def initialize(board, color, pos)

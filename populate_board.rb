@@ -22,7 +22,11 @@ module Populateable
     @board[[0,1]] = Knight.new(@board, :b, [0,1])
     @board[[0,6]] = Knight.new(@board, :b, [0,6])
     # Populate Pawns
-    @board.grid[1] = @board.grid[1].map.with_index { |square, i| Pawn.new(@board, :b, [1, i]) }
-    @board.grid[6] = @board.grid[6].map.with_index { |square, i| Pawn.new(@board, :w, [6, i]) }
+    @board.grid[1] = @board.grid[1].map.with_index do |square, i|
+      Pawn.new(@board, :b, [1, i])
+    end
+    @board.grid[6] = @board.grid[6].map.with_index do |square, i|
+      Pawn.new(@board, :w, [6, i])
+    end
   end
 end

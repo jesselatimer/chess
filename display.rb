@@ -1,9 +1,6 @@
 require 'colorize'
 require 'io/console'
 require_relative 'debugger'
-require 'byebug'
-
-# FEATURE TO ADD: FlIP BOARD BASED ON PLAYER
 
 class Display
   DIRECTION = {
@@ -11,7 +8,6 @@ class Display
     'a' => [0, -1],
     's' => [1, 0],
     'd' => [0,  1]
-      # temporary
   }
 
   COMMANDS = {
@@ -26,6 +22,7 @@ class Display
 
   attr_reader :board, :selection_mode, :current_player
   attr_accessor :cursor_pos, :secondary_cursor
+
   def initialize(board)
     @board = board
     @cursor_pos = [3,3]
@@ -35,7 +32,6 @@ class Display
     @selection_mode = false
   end
 
-  #REFACTOR
   def render_board(current_player)
     @current_player = current_player
     system("clear")
@@ -58,10 +54,14 @@ class Display
       end
       puts ""
     end
+    render_board_text
+    @debugger.inspect(@cursor_pos, @selection_mode, @current_player) if @debug_mode
+  end
+
+  def render_board_text
     puts "#{PLAYERS[@current_player.color].upcase} PLAYER is in check." if board.in_check?(@current_player.color)
     puts "Navigate with WASD.\nPress return to select a piece. Press again to move."
     puts "Press 'q' to quit."
-    @debugger.inspect(@cursor_pos, @selection_mode, @current_player) if @debug_mode
   end
 
   #REFACTOR

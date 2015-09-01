@@ -11,16 +11,15 @@ class Game
     @board = Board.new
     @players = [Player.new(:w), Player.new(:b)]
     @display = Display.new(@board)
-    play
   end
 
   def play
     populate_board
     board.find_moves
 
-    #Game loop
+    # Turn loop
     until board.check_mate?(players.first.color) || board.stale_mate?(players.first.color)
-      # Move_cursor loop
+      # Move cursor loop
       move_made = false
       until move_made
         display.render_board(players.first)
@@ -33,9 +32,9 @@ class Game
           next
         end
       end
+
       players.reverse!
       board.find_moves
-
     end
 
     if board.check_mate?(players.first.color)
@@ -43,9 +42,10 @@ class Game
     elsif board.stale_mate?(players.first.color)
       display.tie
     else
-      raise "Yo it should be one or the other."
+      raise "Neither tie nor victory."
     end
   end
 end
 
-Game.new
+game = Game.new
+game.play
